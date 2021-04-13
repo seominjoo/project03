@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.spring.fleamarket.domain.account.dto.AccountSession;
+import com.spring.fleamarket.domain.account.dto.LoginSession;
 import com.spring.fleamarket.domain.account.service.AccountFindService;
 import com.spring.fleamarket.domain.model.Account;
 
@@ -40,9 +40,9 @@ public class AccountLoginController {
 		if (account != null) {
 			if (input.getPassword().equals(account.getPassword())) {
 				log.info("Login Success - " + account);
-				session.setAttribute("account", new AccountSession(account));
+				session.setAttribute("login", new LoginSession(account));
 				
-				return "redirect:/";
+				return "redirect:/account/login";
 			} else {
 				log.error("Login Fail - Password not matches");
 			}
@@ -53,4 +53,11 @@ public class AccountLoginController {
 		return "redirect:/account/login";	
 	}
 	
+	@PostMapping("/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("login");
+		session.invalidate();
+		
+		return "redirect:/account/login";	
+	}
 }

@@ -7,13 +7,13 @@ import lombok.ToString;
 
 @Getter
 @ToString
-public class AccountSession {
+public class LoginSession {
 
 	private int id;
 	private String name;
 	private String image;
 
-	public AccountSession(Account account) {
+	public LoginSession(Account account) {
 		this.id = account.getId();
 		this.name = account.getName();
 		this.image = account.getImage();
