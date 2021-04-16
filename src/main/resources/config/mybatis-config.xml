@@ -8,7 +8,7 @@
 	</settings>
 	
 	<typeAliases>
-		
+		<package name="com.spring.fleamarket.domain.model"/>
 	</typeAliases>
 	
 </configuration>
