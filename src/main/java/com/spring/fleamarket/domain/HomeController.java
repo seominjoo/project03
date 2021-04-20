@@ -1,4 +1,4 @@
-package com.spring.fleamarket;
+package com.spring.fleamarket.domain;
 
 import java.text.DateFormat;
 import java.util.Date;
