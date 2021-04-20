@@ -10,6 +10,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Alias("Account")
@@ -21,6 +22,7 @@ public class Account {
 	private int id;
 	@NotBlank
 	private String name;
+	@Setter
 	@NotBlank
 	private String password;
 	private Date createdDate;
@@ -31,4 +33,5 @@ public class Account {
 		this.name = name;
 		this.password = password;
 	}
+	
 }
