@@ -6,6 +6,9 @@
 <head>
 <meta charset="UTF-8">
  <title>Hello WebSocket</title> 
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.0/handlebars.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script>
 <script
   src="https://code.jquery.com/jquery-3.6.0.min.js"
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -13,103 +16,85 @@
 <script type="text/javascript" src="<c:url value="/resources/js/sockjs-0.3.4.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/stomp.js"/>"></script>
 
-<script>
-var stompClient = null;
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"
+          type="text/css">
+<link rel="stylesheet" href="<c:url value='/resources/css/style.css?ver=1.0' />" />
 
-function setConnected(connected) {
-  $("#connect").prop("disabled", connected);
-  $("#disconnect").prop("disabled", !connected);
-  if (connected) {
-    $("#conversation").show();
-  }
-  else {
-    $("#conversation").hide();
-  }
-  $("#greetings").html("");
-}
 
-function connect() {
-	//"<c:url value='/websocket'/>"
-		
-  var socket = new SockJS('/fleamarket/websocket');
-  stompClient = Stomp.over(socket);
-  // SockJS와 stomp client를 통해 연결을 시도.
-  stompClient.connect({}, function (frame) {
-    setConnected(true);
-    console.log('Connected: ' + frame);
-    stompClient.subscribe('/topic/greetings', function (greeting) {
-      showGreeting(JSON.parse(greeting.body).content);
-    });
-  });
-}
-
-function disconnect() {
-  if (stompClient !== null) {
-    stompClient.disconnect();
-  }
-  setConnected(false);
-  console.log("Disconnected");
-}
-
-function sendName() {
-  // /app/hello로 JSON 파라미터를 메세지 body로 전송.
-  stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#name").val()}));
-}
-
-function showGreeting(message) {
-  $("#greetings").append("<tr><td>" + message + "</td></tr>");
-}
-
-$(function () {
-  $("form").on('submit', function (e) {
-    e.preventDefault();
-  });
-  $( "#connect" ).click(function() { connect(); });
-  $( "#disconnect" ).click(function() { disconnect(); });
-  $( "#send" ).click(function() { sendName(); });
-});
-</script>
 
 </head>
 <body>
-<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
-    enabled. Please enable
-    Javascript and reload this page!</h2></noscript>
-<div id="main-content" class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <form class="form-inline">
-                <div class="form-group">
-                    <label for="connect">WebSocket connection:</label>
-                    <button id="connect" class="btn btn-default" type="submit">Connect</button>
-                    <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
-                    </button>
-                </div>
-            </form>
+<div class="container clearfix">
+    <div class="people-list" id="people-list">
+        <div class="search">
+            <input id="userName" placeholder="search" type="text"/>
+            <button onclick="registration()">Enter the chat</button>
+            <button onclick="fetchAll()">Refresh</button>
         </div>
-        <div class="col-md-6">
-            <form class="form-inline">
-                <div class="form-group">
-                    <label for="name">What is your name?</label>
-                    <input type="text" id="name" class="form-control" placeholder="Your name here...">
-                </div>
-                <button id="send" class="btn btn-default" type="submit">Send</button>
-            </form>
-        </div>
+        <ul class="list" id="usersList">
+
+
+        </ul>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <table id="conversation" class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Greetings</th>
-                </tr>
-                </thead>
-                <tbody id="greetings">
-                </tbody>
-            </table>
+
+    <div class="chat">
+        <div class="chat-header clearfix">
+            <img alt="avatar" height="55px"
+                 src="https://rtfm.co.ua/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png" width="55px"/>
+
+            <div class="chat-about">
+                <div class="chat-with" id="selectedUserId"></div>
+                <div class="chat-num-messages"></div>
+            </div>
+            <i class="fa fa-star"></i>
+        </div> <!-- end chat-header -->
+
+        <div class="chat-history">
+            <ul>
+
+            </ul>
+
+        </div> <!-- end chat-history -->
+
+        <div class="chat-message clearfix">
+            <textarea id="message-to-send" name="message-to-send" placeholder="Type your message" rows="3"></textarea>
+
+            <i class="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;
+            <i class="fa fa-file-image-o"></i>
+
+            <button id="sendBtn">Send</button>
+
+        </div> <!-- end chat-message -->
+
+    </div> <!-- end chat -->
+
+</div> <!-- end container -->
+
+<script id="message-template" type="text/x-handlebars-template">
+    <li class="clearfix">
+        <div class="message-data align-right">
+            <span class="message-data-time">{{time}}, Today</span> &nbsp; &nbsp;
+            <span class="message-data-name">You</span> <i class="fa fa-circle me"></i>
         </div>
-    </div>
-</div>
+        <div class="message other-message float-right">
+            {{messageOutput}}
+        </div>
+    </li>
+</script>
+
+<script id="message-response-template" type="text/x-handlebars-template">
+    <li>
+        <div class="message-data">
+            <span class="message-data-name"><i class="fa fa-circle online"></i> {{userName}}</span>
+            <span class="message-data-time">{{time}}, Today</span>
+        </div>
+        <div class="message my-message">
+            {{response}}
+        </div>
+    </li>
+</script>
+
+<script type="text/javascript" src="<c:url value="/resources/js/custom.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/chat.js"/>"></script>
 </body>
 </html>

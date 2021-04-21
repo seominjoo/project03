@@ -1,4 +1,4 @@
-package com.spring.fleamarket.config;
+package com.spring.fleamarket.configuration;
 
 
 
@@ -21,7 +21,7 @@ public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
 	
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
-		registry.addEndpoint("/websocket")
+		registry.addEndpoint("/chat")
 		.setAllowedOrigins("*")
 		.withSockJS();
 	}
