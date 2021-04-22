@@ -3,6 +3,7 @@ package com.spring.fleamarket.domain.model;
 import java.util.Date;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 import org.apache.ibatis.type.Alias;
 
@@ -20,7 +21,7 @@ import lombok.ToString;
 public class Account {
 	
 	private int id;
-	@NotBlank
+	@NotEmpty
 	private String name;
 	@Setter
 	@NotBlank

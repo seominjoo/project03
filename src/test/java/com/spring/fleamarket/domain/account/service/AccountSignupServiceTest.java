@@ -8,10 +8,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.spring.fleamarket.domain.model.Account;
+import com.spring.fleamarket.domain.model.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration({
+@ContextConfiguration(locations = {
 	"file:src/main/webapp/WEB-INF/spring/root-context.xml",	
 	"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"
 })
@@ -23,11 +24,24 @@ public class AccountSignupServiceTest {
 	@Test
 	public void createAccountTest() {
 		Account account = Account.builder()
-							.name("test01")
-						    .password("test01")
+							.name("test02")
+						    .password("test02")
 							.build();
 		
-		service.createAccount(account);
+		User user = User.builder()
+						.firstName("Test")
+						.lastName("02")
+						.email("test02@test.test")
+						.phone(null)
+						.build();
+		
+		try {
+			service.createAccount(account, user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
 	}
 	
 }
