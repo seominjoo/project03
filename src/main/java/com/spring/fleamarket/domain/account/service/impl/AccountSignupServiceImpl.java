@@ -26,6 +26,7 @@ public class AccountSignupServiceImpl implements AccountSignupService {
 	@Transactional
 	@Override
 	public void createAccount(@Valid Account account, @Valid User user) throws Exception {
+		account.setPassword(passwordEncoder.encode(account.getPassword()));
 		mapper.insertAccount(account);
 		
 		user.setAccountId(account.getId());
