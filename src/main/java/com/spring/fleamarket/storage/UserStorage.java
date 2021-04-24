@@ -6,18 +6,18 @@ import java.util.Set;
 public class UserStorage {
 
 	private static UserStorage instance;
-	private Set<String> users;
+	private static Set<String> users;
 	
 	private UserStorage() {
 		users = new HashSet<>();
-		//users.add("홍길동");
+		
 	}
 	
 	public static synchronized UserStorage getInstance() {
 		if(instance==null) {
 			instance = new UserStorage();
 		}
-		
+		System.out.println(users);
 		return instance;
 	}
 	

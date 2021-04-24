@@ -22,6 +22,8 @@ public class MessageModel {
 	public String toString() {
 		return "MessageModel [message=" + message + ", fromLogin=" + fromLogin + "]";
 	}
+	
+	
 
 	
 }

@@ -22,11 +22,10 @@ public class UsersController {
 			UserStorage.getInstance().setUser(userName);
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 			return ResponseEntity.badRequest().build();
 		}
-		System.out.println("5678");
+		
 		return ResponseEntity.ok().build();
 	}
 	
