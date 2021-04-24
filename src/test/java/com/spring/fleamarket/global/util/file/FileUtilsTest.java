@@ -1,17 +1,14 @@
 package com.spring.fleamarket.global.util.file;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
 import javax.annotation.Resource;
-import javax.imageio.ImageIO;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -46,8 +43,7 @@ public class FileUtilsTest {
 	}
 	
 	@Test
-	public void cropTest() {
-		
+	public void uploadCroppedImageFileTest() {
 		try {
 			FileUtils.uploadCroppedImageFile(file, accountUploadPath, 100, 50, 400, 400, 300);
 		} catch (Exception e) {

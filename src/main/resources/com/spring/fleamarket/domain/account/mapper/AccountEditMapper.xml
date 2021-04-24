@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.fleamarket.domain.account.mapper.AccountEditMapper">
+
+	<insert id="insertAccountImageByAccountId">	
+		INSERT INTO 
+			account_images (account_id, path)
+		VALUES
+			(#{accountId}, #{path})
+	</insert>
+	
+	<update id="updateAccountImageByAccountId">
+		UPDATE
+			account_images
+		SET
+			path = #{path}
+		WHERE
+			account_id = #{accountId}
+	</update>
+	
+	<delete id="deleteAccountImageByAccountId">
+		DELETE FROM
+			account_images
+		WHERE
+			account_id = #{accountId}
+	</delete>
+	
+</mapper>

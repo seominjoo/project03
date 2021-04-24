@@ -6,4 +6,6 @@ public interface AccountFindMapper {
 	
 	public Account selectAccountByName(String name);
 	
+	public String selectAccountImageByAccountId(int accountId);
+	
 }

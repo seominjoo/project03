@@ -27,7 +27,6 @@ public class Account {
 	@NotBlank
 	private String password;
 	private Date createdDate;
-	private String image;
 	
 	@Builder
 	public Account(String name, String password) {

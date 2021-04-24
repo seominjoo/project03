@@ -11,7 +11,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 public class FileConfig {
 	
 	private String root = "C:\\MyFleaMarket";
-	private String accountFileUploadPath = "\\account";
+	private String accountFileUploadSubpath = "account";
 	
 	private final int MAX_UPLOAD_SIZE = 10 * 1024 * 1024; // 10MB
 	
@@ -26,7 +26,7 @@ public class FileConfig {
 	
 	@Bean(name = "accountFileUploadPath")
 	public String accountFileUploadPath() {
-		return root + File.separator + accountFileUploadPath;
+		return root + File.separator + accountFileUploadSubpath;
 	}
 	
 }

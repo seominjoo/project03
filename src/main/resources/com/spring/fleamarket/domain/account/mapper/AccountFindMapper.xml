@@ -8,4 +8,8 @@
 		SELECT * FROM accounts WHERE name = #{name}
 	</select>
 	
+	<select id="selectAccountImageByAccountId" resultType="string">
+		SELECT path FROM account_images WHERE account_id = #{accountId}
+	</select>
+	
 </mapper>

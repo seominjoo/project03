@@ -35,9 +35,9 @@ public class FileUtils {
 		BufferedImage savedImage = Scalr.resize(croppedImage, resize);
 		
 		ImageIO.write(savedImage, formatName, target);
-	
+		
 		log.info("File upload success");
-		return savedPath + File.separator + fileName;
+		return savedPath.substring(uploadPath.length() + File.separator.length()) + File.separator + fileName;
 	}
 	
 	public static String uploadFile(MultipartFile file, String uploadPath) {
@@ -53,6 +53,21 @@ public class FileUtils {
 		
 		return savedPath + File.separator + fileName;
 	}
+	
+	public static void deleteFile(String pathName) {
+		File file = new File(pathName);
+		if (!file.exists()) {
+			log.info("File not exist");
+			return;
+		}
+		
+		while (file.exists()) {
+			file.delete();
+		}
+		
+		log.info("File delete success");
+	}
+	
 	
 	private static String getCurrentDayPath(String uploadRootPath) {
 		Calendar currentDay = Calendar.getInstance();
