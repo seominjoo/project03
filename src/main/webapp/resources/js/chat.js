@@ -50,6 +50,7 @@ function selectUser(userName) {
     }
     $('#selectedUserId').html('');
     $('#selectedUserId').append('Chat with ' + userName);
+      
 }
 
 function fetchAll() {
@@ -70,3 +71,4 @@ function fetchAll() {
         $('#usersList').html(usersTemplateHTML);
     });
 }
+

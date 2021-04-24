@@ -52,6 +52,7 @@ function sendMessage(message) {
         $chatHistoryList.append(template(context));
         scrollToBottom();
         $textarea.val('');
+        
     }
 }
 
