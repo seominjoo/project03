@@ -9,6 +9,7 @@ import java.util.UUID;
 import javax.imageio.ImageIO;
 
 import org.imgscalr.Scalr;
+import org.springframework.http.MediaType;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -108,5 +109,14 @@ public class FileUtils {
 		}
 		
 		return false;
+	}
+	
+	public static MediaType getMediaTypeFromFileName(String fileName) throws NotAcceptableImageFileFormatException {
+		String fileFormat = getFileFormatName(fileName);
+		if (!isImageFormat(fileFormat)) {
+			throw new NotAcceptableImageFileFormatException();
+		}
+		
+		return ImageFormat.valueOf(fileFormat).getMediaType();
 	}
 }

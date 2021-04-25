@@ -1,42 +1,49 @@
 package com.spring.fleamarket.domain.account.service.impl;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import com.spring.fleamarket.domain.account.dto.AccountImageRequest;
-import com.spring.fleamarket.domain.account.mapper.AccountEditMapper;
-import com.spring.fleamarket.domain.account.service.AccountEditService;
+import com.spring.fleamarket.domain.account.mapper.AccountImageMapper;
+import com.spring.fleamarket.domain.account.service.AccountImageService;
 import com.spring.fleamarket.domain.model.AccountImage;
 import com.spring.fleamarket.global.util.file.FileUtils;
+import com.spring.fleamarket.global.util.file.exception.NotAcceptableImageFileFormatException;
 
 import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Validated
 @Service
-public class AccountEditServiceImpl implements AccountEditService {
+public class AccountImageServiceImpl implements AccountImageService {
 
 	@Resource(name = "accountFileUploadPath")
 	String uploadPath;
 	
 	@Autowired
-	private AccountEditMapper mapper;
+	private AccountImageMapper mapper;
 	
 	@Override
-	public void insertAccountImageByAccountId(@Valid AccountImageRequest request, AccountImage accountImage) {		
+	public void insertAccountImageByAccountId(@Valid AccountImageRequest request, AccountImage accountImage) throws Exception {		
 		String path = null;
 		try {
 			path = uploadCroppedImageFile(request);
 			accountImage.setPath(path);
-			
+			log.info(accountImage);
 			mapper.insertAccountImageByAccountId(accountImage);
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			log.info(e.getMessage());
 			if (path != null) {
 				FileUtils.deleteFile(uploadPath + File.separator + path);				
@@ -46,15 +53,16 @@ public class AccountEditServiceImpl implements AccountEditService {
 	}
 
 	@Override
-	public void updateAccountImageByAccountId(@Valid AccountImageRequest request, AccountImage accountImage) {
+	public void updateAccountImageByAccountId(@Valid AccountImageRequest request, AccountImage accountImage) throws Exception {
 		String newPath = null;
 		try {
+			String prevPath = accountImage.getPath();
 			newPath = uploadCroppedImageFile(request);
 			accountImage.setPath(newPath);
 				
 			mapper.updateAccountImageByAccountId(accountImage);
-			FileUtils.deleteFile(uploadPath + File.separator + accountImage.getPath());
-		} catch (Exception e) {
+			FileUtils.deleteFile(uploadPath + File.separator + prevPath);
+		} catch (SQLException e) {
 			log.info(e.getMessage());
 			if (newPath != null) {
 				FileUtils.deleteFile(uploadPath + File.separator + newPath);	
@@ -64,11 +72,11 @@ public class AccountEditServiceImpl implements AccountEditService {
 	}
 	
 	@Override
-	public void deleteAccountImageByAccountId(AccountImage accountImage) {
+	public void deleteAccountImageByAccountId(AccountImage accountImage) throws Exception {
 		try {
 			mapper.deleteAccountImageByAccountId(accountImage.getAccountId());
 			FileUtils.deleteFile(uploadPath + File.separator + accountImage.getPath());
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			log.info(e.getMessage());
 		}
 	}
@@ -81,6 +89,18 @@ public class AccountEditServiceImpl implements AccountEditService {
 											    request.getWidth(), 
 											    request.getHeight(),
 											    request.getResize());
+	}
+
+	@Override
+	public byte[] getImageBytes(String path) throws IOException {		
+		return IOUtils.toByteArray(new FileInputStream(uploadPath + File.separator + path));
+	}
+
+	@Override
+	public HttpHeaders getHttpHeaders(String path) throws NotAcceptableImageFileFormatException {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(FileUtils.getMediaTypeFromFileName(path));
+		return headers;
 	}
 
 }

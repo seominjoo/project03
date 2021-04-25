@@ -8,8 +8,16 @@
 		SELECT * FROM accounts WHERE name = #{name}
 	</select>
 	
-	<select id="selectAccountImageByAccountId" resultType="string">
-		SELECT path FROM account_images WHERE account_id = #{accountId}
+	<select id="selectAccountImageByAccountId" resultType="AccountImage">
+		SELECT 
+			a.id as account_id,
+		    i.path
+		FROM 
+			accounts a
+		    LEFT JOIN
+		    account_images i
+		    ON a.id = i.account_id
+		WHERE a.id = #{account_id}
 	</select>
 	
 </mapper>

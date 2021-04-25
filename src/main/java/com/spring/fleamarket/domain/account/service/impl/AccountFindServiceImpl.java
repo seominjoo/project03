@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.fleamarket.domain.account.mapper.AccountFindMapper;
 import com.spring.fleamarket.domain.account.service.AccountFindService;
+import com.spring.fleamarket.domain.model.AccountImage;
 
 @Service
 public class AccountFindServiceImpl implements AccountFindService {
@@ -13,7 +14,7 @@ public class AccountFindServiceImpl implements AccountFindService {
 	AccountFindMapper mapper;
 	
 	@Override
-	public String selectAccountImageByAccountId(int accountId) {
+	public AccountImage selectAccountImageByAccountId(int accountId) {
 		return mapper.selectAccountImageByAccountId(accountId);
 	}
 

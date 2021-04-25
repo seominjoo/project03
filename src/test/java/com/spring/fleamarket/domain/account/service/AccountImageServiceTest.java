@@ -23,10 +23,10 @@ import com.spring.fleamarket.domain.model.AccountImage;
 	"file:src/main/webapp/WEB-INF/spring/root-context.xml",	
 	"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"
 })
-public class AccountEditServiceTest {
+public class AccountImageServiceTest {
 	
 	@Autowired
-	AccountEditService service;
+	AccountImageService service;
 	
 	@Autowired
 	AccountFindService accountFindService;
@@ -45,7 +45,7 @@ public class AccountEditServiceTest {
 		
 		accountImageRequest = AccountImageRequest.builder()
 												 .file(file)
-												 .x(100).y(100)
+												 .x(100).y(200)
 												 .width(200)
 												 .height(200)
 												 .build();
@@ -55,22 +55,26 @@ public class AccountEditServiceTest {
 	}
 		
 	@Test
-	public void insertAccountImageByAccountIdTest() {
+	public void insertAccountImageByAccountIdTest() throws Exception {
 		service.insertAccountImageByAccountId(accountImageRequest, accountImage);
 	}
 	
 	@Test
 	public void updateAccountImageByAccountIdTest() throws Exception {
-		accountImage.setPath(accountFindService.selectAccountImageByAccountId(accountImage.getAccountId()));
-		
-		service.updateAccountImageByAccountId(accountImageRequest, accountImage);
+		accountImage = accountFindService.selectAccountImageByAccountId(accountImage.getAccountId());
+		if (accountImage != null) {			
+			accountImage.setPath(accountImage.getPath());
+			service.updateAccountImageByAccountId(accountImageRequest, accountImage);			
+		}
 	}
 
 	@Test
 	public void deleteAccountImageByAccountIdTest() throws Exception {
-		accountImage.setPath(accountFindService.selectAccountImageByAccountId(accountImage.getAccountId()));
-
-		service.deleteAccountImageByAccountId(accountImage);	
+		accountImage = accountFindService.selectAccountImageByAccountId(accountImage.getAccountId());
+		if (accountImage != null) {			
+			accountImage.setPath(accountImage.getPath());
+			service.deleteAccountImageByAccountId(accountImage);	
+		}
 	}
 	
 }

@@ -12,6 +12,8 @@ import lombok.ToString;
 @ToString
 public class AccountImage {
 
+	public static final String DEFAULT_PATH = "noimage.png";
+	
 	private int accountId;
 	@Setter
 	private String path;
@@ -19,6 +21,16 @@ public class AccountImage {
 	@Builder
 	public AccountImage(int accountId) {
 		this.accountId = accountId;
+		this.path = DEFAULT_PATH;
 	}
 	
+	@Builder
+	public AccountImage(int accountId, String path) {
+		this.accountId = accountId;
+		if (path != null) {
+			this.path = path;
+		} else {
+			this.path = DEFAULT_PATH;
+		}
+	}
 }
