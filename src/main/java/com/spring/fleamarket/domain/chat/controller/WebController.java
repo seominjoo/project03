@@ -1,4 +1,4 @@
-package com.spring.fleamarket.resource;
+package com.spring.fleamarket.domain.chat.controller;
 
 import java.security.Principal;
 

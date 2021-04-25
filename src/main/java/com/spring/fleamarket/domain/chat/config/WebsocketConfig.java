@@ -1,4 +1,4 @@
-package com.spring.fleamarket.configuration;
+package com.spring.fleamarket.domain.chat.config;
 
 
 

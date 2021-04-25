@@ -1,4 +1,4 @@
-package com.spring.fleamarket.model;
+package com.spring.fleamarket.domain.chat.model;
 
 public class MessageModel {
 

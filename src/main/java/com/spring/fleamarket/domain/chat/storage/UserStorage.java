@@ -1,4 +1,4 @@
-package com.spring.fleamarket.storage;
+package com.spring.fleamarket.domain.chat.storage;
 
 import java.util.HashSet;
 import java.util.Set;
