@@ -1,6 +1,8 @@
 package com.spring.fleamarket.domain.chat.controller;
 
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -22,10 +24,12 @@ public class MessageController {
 	private SimpMessagingTemplate simpMessagingTemplate;
 	
 	@MessageMapping("/chat/{to}")
-	public void sendMessage(@DestinationVariable String to, MessageModel message) {
+	public void sendMessage(@DestinationVariable String to, MessageModel message, Principal pc) {
 		System.out.println("handling send message: " + message + "to: " + to);
 		
-		service.saveMessage(message);
+		//message.setFromLogin(pc.getName());
+		
+		//service.saveMessage(message);
 		
 		boolean isExists = UserStorage.getInstance().getUsers().contains(to);
 		if(isExists) {

@@ -24,6 +24,7 @@ function connectToChat(userName) {
 function sendMsg(from, text) {
     stompClient.send("/app/chat/" + selectedUser, {}, JSON.stringify({
         fromLogin: from,
+        to: selectedUser,
         message: text
     }));
 }
