@@ -20,4 +20,9 @@
 		WHERE a.id = #{account_id}
 	</select>
 	
+	<select id="selectAll" resultType="Account">
+		SELECT * FROM accounts;
+	</select>
+	
+	
 </mapper>

@@ -7,41 +7,23 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.spring.fleamarket.domain.model.Account;
-import com.spring.fleamarket.domain.model.User;
+import lombok.extern.log4j.Log4j;
 
+@Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {
 	"file:src/main/webapp/WEB-INF/spring/root-context.xml",	
 	"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"
 })
-public class AccountSignupServiceTest {
-	
+public class AccountFindServiceTests {
+
 	@Autowired
-	AccountSignupService service;
+	AccountFindService service;
 	
 	@Test
-	public void createAccountTest() {
-		Account account = Account.builder()
-							.name("test01")
-						    .password("test01")
-							.build();
-		
-		User user = User.builder()
-						.firstName("Test")
-						.lastName("01")
-						.email("test01@test.test")
-						.phone(null)
-						.build();
-		
-		try {
-			service.createAccount(account, user);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		
+	public void selectAllTest() {
+		log.info(service.selectAll());
 	}
 	
 }

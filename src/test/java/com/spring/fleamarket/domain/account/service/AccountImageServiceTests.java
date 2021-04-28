@@ -23,7 +23,7 @@ import com.spring.fleamarket.domain.model.AccountImage;
 	"file:src/main/webapp/WEB-INF/spring/root-context.xml",	
 	"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"
 })
-public class AccountImageServiceTest {
+public class AccountImageServiceTests {
 	
 	@Autowired
 	AccountImageService service;
