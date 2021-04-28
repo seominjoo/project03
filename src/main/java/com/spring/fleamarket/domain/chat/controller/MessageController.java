@@ -29,7 +29,9 @@ public class MessageController {
 		
 		//message.setFromLogin(pc.getName());
 		
-		//service.saveMessage(message);
+		message.setTo(to);
+		
+		service.saveMessage(message);
 		
 		boolean isExists = UserStorage.getInstance().getUsers().contains(to);
 		if(isExists) {

@@ -8,4 +8,9 @@
 		SELECT * FROM accounts WHERE name = #{name}
 	</select>
 	
+	<select id="selectAll" resultType="Account">
+		SELECT * FROM accounts;
+	</select>
+	
 </mapper>
+

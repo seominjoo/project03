@@ -3,6 +3,8 @@ let stompClient;
 let selectedUser;
 let newMessages = new Map();
 
+let sender;
+
 function connectToChat(userName) {
     console.log("connecting to chat...")
     let socket = new SockJS(url + '/ws');
@@ -11,6 +13,8 @@ function connectToChat(userName) {
         console.log("connected to: " + frame);
         stompClient.subscribe("/topic/messages/" + userName, function (response) {
             let data = JSON.parse(response.body);
+            sender = data.fromLogin;
+            receiver = data.message;
             if (selectedUser === data.fromLogin) {
                 render(data.message, data.fromLogin);
             } else {
@@ -37,12 +41,17 @@ function registration() {
         if (error.status === 400) {
             alert("Login is already busy!")
         }
-    })
+    });
 }
+
+
 
 function selectUser(userName) {
     console.log("selecting users: " + userName);
     selectedUser = userName;
+    
+    recallChat(selectedUser);
+    
     let isNew = document.getElementById("newMessage_" + userName) !== null;
     if (isNew) {
         let element = document.getElementById("newMessage_" + userName);
@@ -73,3 +82,10 @@ function fetchAll() {
     });
 }
 
+function recallChat(selectedUser) {
+	$.get(url + "/recallChat/" + selectedUser, function (response){
+		let messages = response;
+		
+		console.log(messages);
+	});
+}

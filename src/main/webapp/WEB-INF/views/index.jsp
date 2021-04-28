@@ -30,6 +30,7 @@
             <input id="userName" placeholder="search" type="text"/>
             <button onclick="registration()">Enter the chat</button>
             <button onclick="fetchAll()">Refresh</button>
+            <button onclick="recallChat()">recall</button>
         </div>
         <ul class="list" id="usersList">
 

@@ -12,6 +12,7 @@ public class MessageModel {
 	private String message;
 	@Setter
 	private String fromLogin;
+	@Setter
 	private String to;
 	
 	@Builder
