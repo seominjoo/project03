@@ -8,9 +8,22 @@
 		SELECT * FROM accounts WHERE name = #{name}
 	</select>
 	
+	<select id="selectAccountImageByAccountId" resultType="AccountImage">
+		SELECT 
+			a.id as account_id,
+		    i.path
+		FROM 
+			accounts a
+		    LEFT JOIN
+		    account_images i
+		    ON a.id = i.account_id
+		WHERE a.id = #{account_id}
+	</select>
+	
 	<select id="selectAll" resultType="Account">
 		SELECT * FROM accounts;
 	</select>
+	
 	
 </mapper>
 
