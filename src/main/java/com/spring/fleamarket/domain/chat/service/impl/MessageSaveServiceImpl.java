@@ -1,5 +1,7 @@
 package com.spring.fleamarket.domain.chat.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,12 @@ public class MessageSaveServiceImpl implements MessageSaveService{
 	public void saveMessage(MessageModel msgModel) {
 		
 		mapper.saveMessage(msgModel);
+	}
+
+	@Override
+	public List<MessageModel> recallChat(MessageModel msgModel) {
+			
+		return mapper.recallChat(msgModel);
 	}
 
 }

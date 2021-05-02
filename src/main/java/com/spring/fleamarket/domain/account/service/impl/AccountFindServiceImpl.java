@@ -17,6 +17,12 @@ public class AccountFindServiceImpl implements AccountFindService {
 	AccountFindMapper mapper;
 	
 	@Override
+	public Account selectAccountByName(String name) {
+		
+		return mapper.selectAccountByName(name);
+	}
+	
+	@Override
 	public AccountImage selectAccountImageByAccountId(int accountId) {
 		return mapper.selectAccountImageByAccountId(accountId);
 	}

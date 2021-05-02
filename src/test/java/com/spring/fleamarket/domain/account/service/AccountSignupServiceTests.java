@@ -24,14 +24,14 @@ public class AccountSignupServiceTests {
 	@Test
 	public void createAccountTest() {
 		Account account = Account.builder()
-							.name("test01")
-						    .password("test01")
+							.name("test02")
+						    .password("test02")
 							.build();
 		
 		User user = User.builder()
 						.firstName("Test")
-						.lastName("01")
-						.email("test01@test.test")
+						.lastName("02")
+						.email("test02@test.test")
 						.phone(null)
 						.build();
 		

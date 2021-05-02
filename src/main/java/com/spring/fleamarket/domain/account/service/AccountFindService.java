@@ -7,6 +7,8 @@ import com.spring.fleamarket.domain.model.AccountImage;
 
 public interface AccountFindService {
 	
+	public Account selectAccountByName(String name);
+	
 	public AccountImage selectAccountImageByAccountId(int accountId);
 	
 	public List<Account> selectAll();

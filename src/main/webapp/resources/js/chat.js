@@ -3,8 +3,6 @@ let stompClient;
 let selectedUser;
 let newMessages = new Map();
 
-let sender;
-
 function connectToChat(userName) {
     console.log("connecting to chat...")
     let socket = new SockJS(url + '/ws');
@@ -13,13 +11,14 @@ function connectToChat(userName) {
         console.log("connected to: " + frame);
         stompClient.subscribe("/topic/messages/" + userName, function (response) {
             let data = JSON.parse(response.body);
-            sender = data.fromLogin;
-            receiver = data.message;
-            if (selectedUser === data.fromLogin) {
-                render(data.message, data.fromLogin);
+            
+            console.log(data.senderId);
+            
+            if (selectedUser === data.senderId) {
+                render(data.content, data.senderId);
             } else {
-                newMessages.set(data.fromLogin, data.message);
-                $('#userNameAppender_' + data.fromLogin).append('<span id="newMessage_' + data.fromLogin + '" style="color: red">+1</span>');
+                newMessages.set(data.senderId, data.content);
+                $('#userNameAppender_' + data.senderId).append('<span id="newMessage_' + data.senderId + '" style="color: red">+1</span>');
             }
         });
     });
@@ -27,28 +26,17 @@ function connectToChat(userName) {
 
 function sendMsg(from, text) {
     stompClient.send("/app/chat/" + selectedUser, {}, JSON.stringify({
-        fromLogin: from,
-        to: selectedUser,
-        message: text
+        senderId: from,
+        receiverId: selectedUser,
+        content: text
     }));
 }
-
-function registration() {
-    let userName = document.getElementById("userName").value;
-    $.get(url + "/registration/" + userName, function (response) {
-        connectToChat(userName);
-    }).fail(function (error) {
-        if (error.status === 400) {
-            alert("Login is already busy!")
-        }
-    });
-}
-
-
 
 function selectUser(userName) {
     console.log("selecting users: " + userName);
     selectedUser = userName;
+    
+    $('li').remove("#chat-contents");
     
     recallChat(selectedUser);
     
@@ -63,29 +51,10 @@ function selectUser(userName) {
       
 }
 
-function fetchAll() {
-    $.get(url + "/fetchAllUsers", function (response) {
-        let users = response;
-        let usersTemplateHTML = "";
-        for (let i = 0; i < users.length; i++) {
-            usersTemplateHTML = usersTemplateHTML + '<a href="#" onclick="selectUser(\'' + users[i] + '\')"><li class="clearfix">\n' +
-                '                <img src="https://rtfm.co.ua/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png" width="55px" height="55px" alt="avatar" />\n' +
-                '                <div class="about">\n' +
-                '                    <div id="userNameAppender_' + users[i] + '" class="name">' + users[i] + '</div>\n' +
-                '                    <div class="status">\n' +
-                '                        <i class="fa fa-circle offline"></i>\n' +
-                '                    </div>\n' +
-                '                </div>\n' +
-                '            </li></a>';
-        }
-        $('#usersList').html(usersTemplateHTML);
-    });
-}
-
 function recallChat(selectedUser) {
 	$.get(url + "/recallChat/" + selectedUser, function (response){
 		let messages = response;
-		
+			
 		console.log(messages);
 	});
 }

@@ -20,20 +20,30 @@
           type="text/css">
 <link rel="stylesheet" href="<c:url value='/resources/css/style.css?ver=1.0' />" />
 
-
-
 </head>
-<body>
+<body onload="connectToChat('${userName }')">
 <div class="container clearfix">
     <div class="people-list" id="people-list">
         <div class="search">
-            <input id="userName" placeholder="search" type="text"/>
-            <button onclick="registration()">Enter the chat</button>
-            <button onclick="fetchAll()">Refresh</button>
-            <button onclick="recallChat()">recall</button>
+            <input id="userName" value="${userName }" type="text"/>
         </div>
         <ul class="list" id="usersList">
-
+        	<c:forEach items="${chatUser }" var="user">
+        	
+        		
+        			<a href="#" onclick="selectUser('${user.name}')"><li class="clearfix">
+                               <img src="https://rtfm.co.ua/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png" width="55px" height="55px" alt="avatar" />
+                                <div class="about">
+                                    <div id="userNameAppender_${user.name}" class="name">${user.name}</div>
+                                    <div class="status">
+                                        <i class="fa fa-circle offline"></i>
+                                    </div>
+                                </div>
+                            </li></a>
+        		
+        		
+        	</c:forEach>
+			
 
         </ul>
     </div>
@@ -52,7 +62,7 @@
 
         <div class="chat-history">
             <ul>
-
+				
             </ul>
 
         </div> <!-- end chat-history -->
@@ -72,7 +82,7 @@
 </div> <!-- end container -->
 
 <script id="message-template" type="text/x-handlebars-template">
-    <li class="clearfix">
+    <li class="clearfix" id="chat-contents">
         <div class="message-data align-right">
             <span class="message-data-time">{{time}}, Today</span> &nbsp; &nbsp;
             <span class="message-data-name">You</span> <i class="fa fa-circle me"></i>
@@ -84,7 +94,7 @@
 </script>
 
 <script id="message-response-template" type="text/x-handlebars-template">
-    <li>
+    <li id="chat-contents">
         <div class="message-data">
             <span class="message-data-name"><i class="fa fa-circle online"></i> {{userName}}</span>
             <span class="message-data-time">{{time}}, Today</span>
