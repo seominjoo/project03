@@ -18,9 +18,9 @@ public class MessageModel {
 
 	private int messageNo;
 	@Setter
-	private String senderId;
+	private int senderId;
 	@Setter
-	private String receiverId;
+	private int receiverId;
 	private String content;
 		
 }

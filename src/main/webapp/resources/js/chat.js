@@ -3,23 +3,17 @@ let stompClient;
 let selectedUser;
 let newMessages = new Map();
 
-function connectToChat(userName) {
+function connectToChat(userId) {
     console.log("connecting to chat...")
     let socket = new SockJS(url + '/ws');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         console.log("connected to: " + frame);
-        stompClient.subscribe("/topic/messages/" + userName, function (response) {
+        stompClient.subscribe("/topic/messages/" + userId, function (response) {
             let data = JSON.parse(response.body);
-            
-            console.log(data.senderId);
-            
-            if (selectedUser === data.senderId) {
-                render(data.content, data.senderId);
-            } else {
-                newMessages.set(data.senderId, data.content);
-                $('#userNameAppender_' + data.senderId).append('<span id="newMessage_' + data.senderId + '" style="color: red">+1</span>');
-            }
+                     
+            render(data.content, data.senderId);
+                     
         });
     });
 }
@@ -32,9 +26,9 @@ function sendMsg(from, text) {
     }));
 }
 
-function selectUser(userName) {
-    console.log("selecting users: " + userName);
-    selectedUser = userName;
+function selectUser(userId, userName) {
+    console.log("selecting users: " + userId);
+    selectedUser = userId;
     
     $('li').remove("#chat-contents");
     

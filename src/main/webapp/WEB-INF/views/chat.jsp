@@ -21,17 +21,17 @@
 <link rel="stylesheet" href="<c:url value='/resources/css/style.css?ver=1.0' />" />
 
 </head>
-<body onload="connectToChat('${userName }')">
+<body onload="connectToChat('${userId }')">
 <div class="container clearfix">
     <div class="people-list" id="people-list">
         <div class="search">
-            <input id="userName" value="${userName }" type="text"/>
+            <input id="userName" value="${userId }" type="text"/>
         </div>
         <ul class="list" id="usersList">
         	<c:forEach items="${chatUser }" var="user">
         	
         		
-        			<a href="#" onclick="selectUser('${user.name}')"><li class="clearfix">
+        			<a href="#" onclick="selectUser('${user.id}','${user.name}')"><li class="clearfix">
                                <img src="https://rtfm.co.ua/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png" width="55px" height="55px" alt="avatar" />
                                 <div class="about">
                                     <div id="userNameAppender_${user.name}" class="name">${user.name}</div>
@@ -96,7 +96,7 @@
 <script id="message-response-template" type="text/x-handlebars-template">
     <li id="chat-contents">
         <div class="message-data">
-            <span class="message-data-name"><i class="fa fa-circle online"></i> {{userName}}</span>
+            <span class="message-data-name"><i class="fa fa-circle online"></i> {{userId}}</span>
             <span class="message-data-time">{{time}}, Today</span>
         </div>
         <div class="message my-message">

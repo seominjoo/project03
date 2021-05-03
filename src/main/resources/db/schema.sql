@@ -28,9 +28,12 @@ CREATE TABLE account_images (
 );
 
 CREATE TABLE messages (
-	message_no INT PRIMARY KEY auto_increment,			-- 메세지 고유번호(순차)
-    sender_id VARCHAR(50) NOT NULL,						-- 메세지 송신자
-    receiver_id VARCHAR(50) NOT NULL,					-- 메세지 수신자
-    content VARCHAR(255),								-- 메세지 내용
-    created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP	-- 메세지 보낸 날짜
+	message_no INT PRIMARY KEY AUTO_INCREMENT,
+	sender_id INT NOT NULL,
+	receiver_id INT NOT NULL,
+	content VARCHAR(255),
+	create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	CONSTRAINT user_sender_id_fk FOREIGN KEY (sender_id) REFERENCES accounts (id),
+	CONSTRAINT user_receiver_id_fk FOREIGN KEY (receiver_id) REFERENCES accounts (id)
+
 );

@@ -22,9 +22,10 @@ public class WebController {
 		
 		model.addAttribute("chatUser", serviceAF.selectAll());
 		
-		if(principal !=null) {
+		if(principal != null) {
 			
-			model.addAttribute("userName", principal.getName());
+			model.addAttribute("userId", account.getId());
+			model.addAttribute("userName", account.getName());
 			
 		}
 		

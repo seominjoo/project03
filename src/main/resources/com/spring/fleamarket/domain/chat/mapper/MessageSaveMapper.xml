@@ -14,7 +14,7 @@
 	<select id="recallChat" resultType="MessageModel">
 		SELECT * 
 		FROM messages 
-		WHERE sender_id = #{senderId} AND receiver_id = #{receiverId} OR sender_id = #{receiverId} AND receiver_id = #{senderId} ORDER BY created_date
+		WHERE sender_id = #{senderId} AND receiver_id = #{receiverId} OR sender_id = #{receiverId} AND receiver_id = #{senderId}
 	</select>
 	
 </mapper>

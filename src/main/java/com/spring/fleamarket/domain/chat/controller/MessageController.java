@@ -27,14 +27,13 @@ public class MessageController {
 	private SimpMessagingTemplate simpMessagingTemplate;
 	
 	@MessageMapping("/chat/{receiverId}")
-	public void sendMessage(@DestinationVariable String receiverId, MessageModel message, Principal pc) {
+	public void sendMessage(@DestinationVariable int receiverId, MessageModel message) {
 		
 		System.out.println("handling send message: " + message);
 		
 		service.saveMessage(message);
-					
-		boolean isExists = serviceAF.selectAccountByName(message.getReceiverId()).getName().contains(message.getReceiverId());
-		if(isExists) {
+		
+		if(receiverId != 0) {
 			simpMessagingTemplate.convertAndSend("/topic/messages/" + message.getReceiverId(), message);
 		}
 	}
