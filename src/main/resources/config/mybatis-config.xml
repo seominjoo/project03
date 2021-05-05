@@ -9,6 +9,7 @@
 	
 	<typeAliases>
 		<package name="com.spring.fleamarket.domain.model"/>
+		<package name="com.spring.fleamarket.domain.chat.model"/>
 	</typeAliases>
 	
 </configuration>

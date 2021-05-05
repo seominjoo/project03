@@ -1,6 +1,7 @@
 DROP TABLE accounts;
 DROP TABLE users;
 DROP TABLE account_images;
+DROP TABLE messages;
 
 CREATE TABLE accounts (
 	id INT PRIMARY KEY AUTO_INCREMENT,					-- 계정 고유번호
@@ -24,4 +25,15 @@ CREATE TABLE account_images (
 	path VARCHAR(255) NOT NULL,
     CONSTRAINT account_image_account_id_fk FOREIGN KEY (account_id)
 		REFERENCES accounts (id)
+);
+
+CREATE TABLE messages (
+	message_no INT PRIMARY KEY AUTO_INCREMENT,
+	sender_id INT NOT NULL,
+	receiver_id INT NOT NULL,
+	content VARCHAR(255),
+	create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	CONSTRAINT message_sender_id_fk FOREIGN KEY (sender_id) REFERENCES accounts (id),
+	CONSTRAINT message_receiver_id_fk FOREIGN KEY (receiver_id) REFERENCES accounts (id)
+
 );

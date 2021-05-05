@@ -22,6 +22,10 @@ public class HomeController {
 	}
 	
 	@GetMapping("/login")
-	public void getLoginPage() {};
+	public void getLoginPage() {
+		
+	}
+		
+
 	
 }
