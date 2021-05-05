@@ -33,7 +33,7 @@ CREATE TABLE messages (
 	receiver_id INT NOT NULL,
 	content VARCHAR(255),
 	create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	CONSTRAINT user_sender_id_fk FOREIGN KEY (sender_id) REFERENCES accounts (id),
-	CONSTRAINT user_receiver_id_fk FOREIGN KEY (receiver_id) REFERENCES accounts (id)
+	CONSTRAINT message_sender_id_fk FOREIGN KEY (sender_id) REFERENCES accounts (id),
+	CONSTRAINT message_receiver_id_fk FOREIGN KEY (receiver_id) REFERENCES accounts (id)
 
 );
