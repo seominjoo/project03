@@ -1,15 +1,18 @@
 <template>
-  <form v-on:submit.prevent="submitLoginForm" action="">
-    <div>
-      <label for="password">ID : </label>
-      <input type="text" autocomplete="off" v-model="username">
-    </div>
-    <div>
-      <label for="password">Password</label>
-      <input type="password" autocomplete="new-password" v-model="password">
-    </div>
-    <button type="submit">Login</button>
-  </form>
+  <div class="login">
+    <form v-on:submit.prevent="submitLoginForm" class="login__form">
+      <h2 class="login__header">LOGIN</h2>
+      <div class="login__input-box">
+        <label for="password">Username</label>
+        <input type="text" autocomplete="off" v-model="username">
+      </div>
+      <div class="login__input-box">
+        <label for="password">Password</label>
+        <input type="password" autocomplete="new-password" v-model="password">
+      </div>
+      <button type="submit" class="login__submit-btn">Login</button>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -44,6 +47,42 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background-color: #f5f5f5;
+}
+.login__form {
+  padding: 40px 30px;
+  background-color: white;
+  border-radius: 6px;
+}
+.login__header {
+  margin-bottom: 40px;
+  text-align: center;
+  font-size: 30px;
+  font-weight: 900;
+}
+.login__input-box {
+  margin-bottom: 20px;
+}
+.login__input-box label {
+  font-size: 14px;
+  font-weight: 100;
+}
+.login__input-box input {
+  display: block;
+  margin-top: 6px;
+  width: 260px;
+  padding: 6px;
+}
+.login__submit-btn {
+  width: 100%;
+  margin-top: 25px;
+  padding: 6px;
+}
 </style>

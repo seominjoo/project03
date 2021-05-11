@@ -18,4 +18,12 @@ export default {
 
 <style src="./assets/css/reset.css"></style>
 <style>
+html, body {
+  height: 100%;
+}
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 </style>
