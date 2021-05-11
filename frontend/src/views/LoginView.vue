@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <form v-on:submit.prevent="submitLoginForm" class="login__form">
+    <form v-on:submit.prevent="submitLoginForm({username, password})" class="login__form">
       <h2 class="login__header">LOGIN</h2>
       <div class="login__input-box">
         <label for="password">Username</label>
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import axios from '../api'
+import { mapActions } from 'vuex'
 
 export default {
   data: function() {
@@ -26,23 +26,7 @@ export default {
     }
   },
   methods: {
-    submitLoginForm: function() {
-      var data = {
-        username: this.username,
-        password: this.password,
-      };
-
-      axios.post("/login", data)
-        .then(function(response) {
-          if (response.status === 200) {
-            location.href = "/";    
-          }
-          console.log(response);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-    }
+    ...mapActions(['account' ,'submitLoginForm']),
   }
 }
 </script>
