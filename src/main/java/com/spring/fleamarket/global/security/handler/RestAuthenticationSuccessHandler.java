@@ -16,6 +16,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 import com.google.gson.Gson;
 import com.spring.fleamarket.domain.model.Account;
+import com.spring.fleamarket.global.security.model.LoginDetails;
 import com.spring.fleamarket.global.security.model.LoginResponse;
 
 import lombok.extern.log4j.Log4j;
@@ -32,10 +33,15 @@ public class RestAuthenticationSuccessHandler implements AuthenticationSuccessHa
 		
 		SecurityContext context = SecurityContextHolder.getContext();
 		Authentication auth = context.getAuthentication();
-		Account account = ((LoginResponse) auth.getPrincipal()).getAccount();
-		Map<String, Object> userInfo = new HashMap<>();
-		userInfo.put("id", account.getId());
-		userInfo.put("username", account.getName());
+		Account account = ((LoginDetails) auth.getPrincipal()).getAccount();
+//		Map<String, Object> userInfo = new HashMap<>();
+//		userInfo.put("id", account.getId());
+//		userInfo.put("username", account.getName());
+		
+		LoginResponse userInfo = LoginResponse.builder()
+										.id(account.getId())
+										.username(account.getName())
+										.build();
 		
 		response.setStatus(HttpStatus.OK.value());
 		response.setContentType("application/json;charset=utf-8");

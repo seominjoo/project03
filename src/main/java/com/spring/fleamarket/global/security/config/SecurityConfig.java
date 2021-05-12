@@ -16,6 +16,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import com.spring.fleamarket.global.security.filter.RestAuthenticationFilter;
 import com.spring.fleamarket.global.security.handler.RestAuthenticationFailureHandler;
 import com.spring.fleamarket.global.security.handler.RestAuthenticationSuccessHandler;
+import com.spring.fleamarket.global.security.handler.RestLogoutSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -39,7 +40,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //				.anyRequest().authenticated()
 				.anyRequest().permitAll()
 			.and()
-				.formLogin().disable();
+				.formLogin().disable()
+				.logout().logoutSuccessHandler(logoutSuccessHandler());
+			
 		http.addFilterAt(restAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 	
@@ -55,6 +58,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		filter.setAuthenticationSuccessHandler(new RestAuthenticationSuccessHandler());
 		filter.setAuthenticationFailureHandler(new RestAuthenticationFailureHandler());
 		return filter;
+	}
+	
+	@Bean
+	public RestLogoutSuccessHandler logoutSuccessHandler() {
+		return new RestLogoutSuccessHandler();
 	}
 	
 }

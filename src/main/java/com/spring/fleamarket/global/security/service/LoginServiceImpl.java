@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.fleamarket.domain.account.mapper.AccountFindMapper;
 import com.spring.fleamarket.domain.model.Account;
-import com.spring.fleamarket.global.security.model.LoginResponse;
+import com.spring.fleamarket.global.security.model.LoginDetails;
 
 import lombok.extern.log4j.Log4j;
 
@@ -28,7 +28,7 @@ public class LoginServiceImpl implements UserDetailsService {
 		
 		log.info(account);
 		
-		return new LoginResponse(account);
+		return new LoginDetails(account);
 	}
 	
 }
