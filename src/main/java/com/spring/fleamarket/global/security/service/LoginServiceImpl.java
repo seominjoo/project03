@@ -26,8 +26,6 @@ public class LoginServiceImpl implements UserDetailsService {
 			throw new UsernameNotFoundException("Not Found - " + username);
 		}
 		
-		log.info(account);
-		
 		return new LoginDetails(account);
 	}
 	

@@ -1,8 +1,5 @@
 import axios from '@/api'
 
-// 세션에 저장되어 있는 사용자 정보를 가지고 온다.
-// 없다면 uid를 비워둔다.
-
 const state = {
 	uid: '',
 	username: '',
@@ -35,12 +32,20 @@ const mutations = {
 }
 
 const actions = {
+	getCurrentUserInfo(context) {
+		axios.get('/userinfo')
+			.then(function(response) {
+				if (response.status === 200) {
+					context.commit('setUserInfo', response.data);
+					console.log('Already Login!');
+				}
+			});
+	},
 	postLogin(context, {username, password}) {
 		return new Promise(function(resolve, reject) {
 			axios.post("/login", {username, password})
 			.then(function(response) {
 				context.commit('setUserInfo', response.data);
-				// 세션에 사용자 정보 저장하기
 				resolve(response);
 			})
 			.catch(function(error) {

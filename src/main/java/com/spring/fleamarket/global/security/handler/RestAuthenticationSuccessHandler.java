@@ -34,9 +34,6 @@ public class RestAuthenticationSuccessHandler implements AuthenticationSuccessHa
 		SecurityContext context = SecurityContextHolder.getContext();
 		Authentication auth = context.getAuthentication();
 		Account account = ((LoginDetails) auth.getPrincipal()).getAccount();
-//		Map<String, Object> userInfo = new HashMap<>();
-//		userInfo.put("id", account.getId());
-//		userInfo.put("username", account.getName());
 		
 		LoginResponse userInfo = LoginResponse.builder()
 										.id(account.getId())
