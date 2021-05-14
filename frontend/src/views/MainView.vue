@@ -14,6 +14,7 @@ export default {
       axios.get("/")
         .then(function(response) {
           console.log(response.status);
+          console.log(response.data);
         })
         .catch(function(error) {
           console.log(error);

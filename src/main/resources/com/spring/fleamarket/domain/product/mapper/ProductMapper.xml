@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.spring.fleamarket.domain.productinfo.mapper.ProductMapper">
+
+	<select id="selectProduct" resultType="Product">
+		SELECT * FROM
+		Product WHERE
+		product_id = #{productId}
+	</select>
+
+	<select id="selectProductUserId" resultType="Product">
+		SELECT * FROM
+		Product WHERE user_id = #{userId}
+	</select>
+
+	<select id="selectProductAll" resultType="Product">
+		SELECT * FROM Product
+	</select>
+
+	<insert id="insertProduct">
+		INSERT INTO
+		Product
+		VALUES
+		(2,
+		1,
+		#{productName},
+		#{price},
+		#{location},
+		#{category},
+		#{image},
+		#{productDescription}
+		)
+	</insert>
+
+	<update id="updateProduct">
+		UPDATE
+		Product
+		SET
+		product_name = #{productName},
+		price = #{price},
+		location = #{location},
+		category = #{category},
+		image = #{image},
+		product_info = #{productDescription}
+		WHERE
+		product_id
+		= #{productId}
+	</update>
+
+	<delete id="deleteProduct">
+		DELETE FROM
+		Product
+		WHERE
+		product_id =
+		#{productId}
+	</delete>
+
+</mapper>

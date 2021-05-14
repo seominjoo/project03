@@ -7,6 +7,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.spring.fleamarket.domain.productinfo.mapper.ProductMapper;
+import com.spring.fleamarket.domain.productinfo.service.ProductService;
+
 import lombok.extern.log4j.Log4j;
 
 @Log4j
@@ -21,9 +24,15 @@ public class AccountFindServiceTests {
 	@Autowired
 	AccountFindService service;
 	
+	@Autowired
+	ProductService proservice;
+	
+	@Autowired
+	ProductMapper mapper;
+	
 	@Test
 	public void selectAllTest() {
-		log.info(service.selectAll());
+		log.info(mapper.selectProductAll());
 	}
 	
 }

@@ -59,22 +59,22 @@ public class AccountImageServiceTests {
 		service.insertAccountImageByAccountId(accountImageRequest, accountImage);
 	}
 	
-	@Test
-	public void updateAccountImageByAccountIdTest() throws Exception {
-		accountImage = accountFindService.selectAccountImageByAccountId(accountImage.getAccountId());
-		if (accountImage != null) {			
-			accountImage.setPath(accountImage.getPath());
-			service.updateAccountImageByAccountId(accountImageRequest, accountImage);			
-		}
-	}
-
-	@Test
-	public void deleteAccountImageByAccountIdTest() throws Exception {
-		accountImage = accountFindService.selectAccountImageByAccountId(accountImage.getAccountId());
-		if (accountImage != null) {			
-			accountImage.setPath(accountImage.getPath());
-			service.deleteAccountImageByAccountId(accountImage);	
-		}
-	}
-	
+//	@Test
+//	public void updateAccountImageByAccountIdTest() throws Exception {
+//		accountImage = accountFindService.selectAccountImageByAccountId(accountImage.getAccountId());
+//		if (accountImage != null) {			
+//			accountImage.setPath(accountImage.getPath());
+//			service.updateAccountImageByAccountId(accountImageRequest, accountImage);			
+//		}
+//	}
+//
+//	@Test
+//	public void deleteAccountImageByAccountIdTest() throws Exception {
+//		accountImage = accountFindService.selectAccountImageByAccountId(accountImage.getAccountId());
+//		if (accountImage != null) {			
+//			accountImage.setPath(accountImage.getPath());
+//			service.deleteAccountImageByAccountId(accountImage);	
+//		}
+//	}
+//	
 }

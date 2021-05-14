@@ -35,11 +35,12 @@
 	  	<constructor-arg ref="dataSource" />
 	</bean>
 	
+	
+	
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 	
 	<mybatis-spring:scan base-package="com.spring.fleamarket.domain.**.mapper" />
 	<mybatis-spring:scan base-package="com.spring.fleamarket.chat.**.mapper" />
-	
 	<context:component-scan base-package="com.spring.fleamarket" />
 	
 </beans>
