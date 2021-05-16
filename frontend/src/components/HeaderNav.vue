@@ -3,13 +3,13 @@
     <router-link class="header-nav__logo" to="/">  
       <img alt="Logo" src="../assets/image/logo.png" class="header-nav__logo-img">
     </router-link>
-    <div v-if="!isAuth" class="header-nav__items">
-      <router-link to="/login" class="header-nav__item">Sign in</router-link>
-      <router-link to="/join" class="header-nav__item">Sign up</router-link>
-    </div>
     <div v-if="isAuth" class="header-nav__items">
       <router-link to="/mypage" class="header-nav__item">My page</router-link>
       <a v-on:click="logout" class="header-nav__item">Logout</a>
+    </div>
+    <div v-else class="header-nav__items">
+      <router-link to="/login" class="header-nav__item">Sign in</router-link>
+      <router-link to="/join" class="header-nav__item">Sign up</router-link>
     </div>
   </div>
 </template>
