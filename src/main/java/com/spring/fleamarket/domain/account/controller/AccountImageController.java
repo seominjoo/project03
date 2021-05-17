@@ -4,18 +4,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.spring.fleamarket.domain.account.dto.AccountImageRequest;
 import com.spring.fleamarket.domain.account.service.AccountFindService;
 import com.spring.fleamarket.domain.account.service.AccountImageService;
 import com.spring.fleamarket.domain.model.AccountImage;
 
 import lombok.extern.log4j.Log4j;
 
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @Log4j
 public class AccountImageController {
@@ -57,11 +60,10 @@ public class AccountImageController {
 	}
 	
 	@PostMapping("/account/image")
-	public String uploadAccountImage(MultipartFile file) {
+	public String uploadAccountImage(MultipartFile file, AccountImageRequest request) {
 		log.info("file=" + file);
-		log.info(file.getOriginalFilename());
-		
-		return "redirect:/account/edit";
+		log.info("request=" + request);
+		return "OK";
 	}
 	
 }
