@@ -6,6 +6,9 @@
       Edit
       <input type="file" ref="file" @change="loadImage($event)" accept="image/*">
     </button>
+    <button @click="deleteImage">
+      Delete
+    </button>
     <ImageCropModal v-if="showModal">
       <div slot="header" class="modal__header">
         <h2>Crop your profile picture</h2>
@@ -121,6 +124,8 @@ export default {
       }
     },
     uploadImage() {
+      this.isUploading = true;
+      
       const form = new FormData();
       form.append('file', this.image.file);
 
@@ -144,7 +149,6 @@ export default {
         this.isUploading = false;
       });
 
-      this.isUploading = true;
       this.closeModal();
     },
     closeModal() {
@@ -164,6 +168,24 @@ export default {
       if (this.image.src) {
         URL.revokeObjectURL(this.image.src);
       }
+    },
+    deleteImage() {
+      this.isUploading = true;
+      
+      let msg;
+      axios.delete('/account/image')
+        .then(response => {
+          if (response.status === 200) {
+            msg = response.data;
+          }
+        })
+        .catch(error => {
+          alert(error.response.data);
+        })
+        .finally(() => {
+          this.isUploading = false;
+          alert(msg);
+        });
     },
   }
 }

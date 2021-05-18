@@ -5,6 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -76,7 +77,7 @@ public class AccountImageController {
 		
 		try {
 			AccountImage accountImage = accountFindService.selectAccountImageByAccountId(account.getId());
-			if (accountImage == null) {
+			if (accountImage.getPath().equals(AccountImage.DEFAULT_PATH)) {
 				accountImageService.insertAccountImageByAccountId(file, request, accountImage);
 			} else {
 				accountImageService.updateAccountImageByAccountId(file, request, accountImage);
@@ -84,10 +85,34 @@ public class AccountImageController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			msg = "파일업로드 실패";
-			return new ResponseEntity<String>(msg, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>(msg, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
+	@DeleteMapping("/account/image")
+	public ResponseEntity<String> deleteAccountImage(@LoginedAccount Account account) {
+		String msg = null;
+		if (account == null) {
+			msg = "로그인하지 않았습니다.";
+			return new ResponseEntity<String>(msg, HttpStatus.UNAUTHORIZED);
+		}
+		
+		try {
+			AccountImage accountImage = accountFindService.selectAccountImageByAccountId(account.getId());
+			if (accountImage.getPath().equals(AccountImage.DEFAULT_PATH)) {
+				msg = "삭제할 이미지가 없습니다.";		
+			} else {
+				msg = "삭제 성공";
+				accountImageService.deleteAccountImageByAccountId(accountImage);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			msg = "파일 삭제 실패";
+			return new ResponseEntity<String>(msg, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<String>(msg, HttpStatus.OK);
+	}
 }
